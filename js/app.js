@@ -52,7 +52,7 @@ function scroll(e) {
 function makeNav(){
     for (let section of sections){
         const navListElement = document.createElement('li');
-        navListElement.innerHTML =`<a href="#" data-scroll="${section.id}" class="menu__link">${section.dataset.nav}</a>`;
+        navListElement.innerHTML =`<a href="#${section.id}" data-scroll="${section.id}" class="menu__link">${section.dataset.nav}</a>`;
         fragment.appendChild(navListElement);
     };
     navList.appendChild(fragment);
@@ -62,13 +62,23 @@ function makeNav(){
 
 function makeActive(){
     for (let section of sections){
-        const topDistance = section.getBoundingClientRect().top;
 
-        if (topDistance > 0 && topDistance < 100) {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        const scrollPosition = window.scrollY;
+
+        if (
+          scrollPosition >= sectionTop &&
+          scrollPosition < sectionTop + sectionHeight
+        ) {
           section.classList.add('your-active-class');
+          const correspondingAnchor = document.querySelector(`a[href="#${section.id}"]`);
+          correspondingAnchor.classList.add('active');
 
         } else {
           section.classList.remove('your-active-class');
+          const correspondingAnchor = document.querySelector(`a[href="#${section.id}"]`);
+          correspondingAnchor.classList.remove('active');
         }
       };
 };
