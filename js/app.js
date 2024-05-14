@@ -63,14 +63,9 @@ function makeNav(){
 function makeActive(){
     for (let section of sections){
 
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        const scrollPosition = window.scrollY;
+        const box = section.getBoundingClientRect();
 
-        if (
-          scrollPosition >= sectionTop &&
-          scrollPosition < sectionTop + sectionHeight
-        ) {
+        if (box.top <= 150 && box.bottom >= 150) {
           section.classList.add('your-active-class');
           const correspondingAnchor = document.querySelector(`a[href="#${section.id}"]`);
           correspondingAnchor.classList.add('active');
